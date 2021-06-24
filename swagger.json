@@ -1,0 +1,106 @@
+{
+    "swagger": "2.0",
+    "info": {
+      "version": "1.0.0",
+      "title": "POQ",
+      "description": "POQ TEST API",
+      "license": {
+        "name": "MIT",
+        "url": "https://opensource.org/licenses/MIT"
+      }
+    },
+    "host": "localhost:3000",
+    "basePath": "/api",
+    "tags": [
+      {
+        "name": "Products",
+        "description": "API for obtain a catalog of products with filter"
+      }
+    ],
+    "schemes": ["http"],
+    "consumes": ["application/json"],
+    "produces": ["application/json"],
+    "paths": {
+        "/products/filter": {
+          "get": {
+            "tags": ["products"],
+            "description": "filter products or highlight some words (separated by commas in the query parameter) in their description: Example: /filter?maxprice=20&size=medium&highlight=green,blue",
+            "produces": ["application/json"],
+            "parameters": [
+                {
+                    "name":"maxprice",
+                    "in":"query",
+                    "description":"max price for filter",
+                    "required":false,
+                    "type":"number"
+                },
+                {                
+                    "name":"size",
+                    "in":"query",
+                    "description":"filter product by size",
+                    "required":false,
+                    "type":"string"
+                },
+                {                
+                    "name":"highlight",
+                    "in":"query",
+                    "description":"highlight some words (separated by commas) in product description",
+                    "required":false,
+                    "type":"string"
+                }
+            ],
+
+            "responses": {
+              "200": {
+                "description": "OK",
+                "schema": {
+                  "$ref": "#/definitions/products"
+                }
+              }
+            }
+          }
+        }
+      },
+      "definitions": {
+        "products": {
+          "type":"object",
+          "properties": {
+            "maxPrice": {
+                "type": "number"              
+            },
+            "minPrice": {
+                "type": "number"
+            },
+            "allSizes": {
+              "type": "object"
+            },
+            "commonWords":{
+                "type":"object"
+            },
+            "products":{
+                "type":"array",
+                "items":{
+                    "type":"object",
+                    "properties":{
+                        "title":{
+                            "type":"string"
+                        },
+                        "price":{
+                            "type":"number"
+                        },
+                        "sizes":{
+                            "type":"object"
+                        },
+                        "description":{
+                            "type":"string"
+                        }
+                    }
+                }
+                
+            }          
+          }
+        }
+      }
+    
+}
+  
